@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
-$LOAD_PATH.unshift(File.dirname(__FILE__)) # this is required when running from /usr/local/bin
+
+real_file = File.symlink?(__FILE__) ? File.expand_path("../#{File.readlink(__FILE__)}", __FILE__) : __FILE__
+root = File.expand_path('../..', real_file)
+$LOAD_PATH.unshift(File.join(root, 'lib'))
+
 require 'pivotal_git_scripts/git_pair'
 
 PivotalGitScripts::GitPair.main(ARGV)
